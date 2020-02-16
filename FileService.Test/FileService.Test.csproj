@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FileService.Contracts\FileService.Contracts.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="TestFile.txt" />
+      <Content Include="TestFile.txt" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+      <None Remove="TestImage.png" />
+      <Content Include="TestImage.png" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+    </ItemGroup>
+
+</Project>
