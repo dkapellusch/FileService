@@ -16,7 +16,7 @@ namespace FileService.Test
             var localFilePath = "TestImage.png";
             var fileInfo = new FileInfo(localFilePath);
             var client = new Contracts.FileService.FileServiceClient(new Channel("localhost:9001", ChannelCredentials.Insecure));
-            var count = 3;
+            var count = 10_000;
             var jobs = Enumerable.Range(0, count).ToArray();
             var stopwatch = Stopwatch.StartNew();
 

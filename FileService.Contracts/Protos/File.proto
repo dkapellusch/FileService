@@ -4,9 +4,16 @@ package ConfluentPoc;
 import "google/protobuf/timestamp.proto";
 // Models
 
-message Ack {
-
+message FileMetadata {
+    string FileName = 1;
+    int64 SizeInBytes = 2;
+    google.protobuf.Timestamp CreatedTime = 3;
+    string Extension = 4;
 }
+
+message Ack {
+}
+
 message File {
     string FileName = 1;
     FileData Data = 2;
@@ -29,8 +36,12 @@ message ReadFileRequest {
 
 // Services
 service FileService {
-    rpc GetFile (ReadFileRequest) returns (File) {}
-    rpc StreamFile (ReadFileRequest) returns (stream FileData){}
-    rpc WriteFile (File) returns (Ack){}
-    rpc WriteFileStream (stream WriteFileRequest) returns (Ack){}
+    rpc GetFile (ReadFileRequest) returns (File) {
+    }
+    rpc StreamFile (ReadFileRequest) returns (stream FileData) {
+    }
+    rpc WriteFile (File) returns (Ack) {
+    }
+    rpc WriteFileStream (stream WriteFileRequest) returns (Ack) {
+    }
 }

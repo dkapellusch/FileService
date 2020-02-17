@@ -246,3 +246,5 @@ _Pvt_Extensions
 .fake/
 
 **/*.db
+
+FileService.Test/outputFiles/
