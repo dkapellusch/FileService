@@ -248,3 +248,4 @@ _Pvt_Extensions
 **/*.db
 
 FileService.Test/outputFiles/
+FileService.Server/FileStore/

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using FileService.Contracts;
-using FileService.Server.RequestHandlers;
+using FileService.Server.RequestHandlers.V2;
 using Grpc.Core;
 
 namespace FileService.Server
@@ -10,14 +10,14 @@ namespace FileService.Server
         private readonly StreamingWriteRequestHandler _streamingWriteRequestHandler;
         private readonly ReadRequestHandler _readRequestHandler;
         private readonly WriteRequestHandler _writeRequestHandler;
-        private readonly StreamFileRequestHandler _streamingReadRequestHandler;
+        private readonly StreamingReadRequestHandler _streamingReadRequestHandler;
 
         public FileRpcService
         (
             ReadRequestHandler readRequestHandler,
             WriteRequestHandler writeRequestHandler,
             StreamingWriteRequestHandler streamingWriteRequestHandler,
-            StreamFileRequestHandler streamingReadRequestHandler
+            StreamingReadRequestHandler streamingReadRequestHandler
         )
         {
             _streamingWriteRequestHandler = streamingWriteRequestHandler;
@@ -29,16 +29,15 @@ namespace FileService.Server
         public override async Task<File> GetFile(ReadFileRequest request, ServerCallContext context) =>
             await _readRequestHandler.HandleRequest(request);
 
-        public override async Task<Ack> WriteFile(File request, ServerCallContext context) =>
+        public override async Task<FileMetadata> WriteFile(File request, ServerCallContext context) =>
             await _writeRequestHandler.HandleRequest(request);
 
         public override async Task StreamFile(ReadFileRequest request, IServerStreamWriter<FileData> responseStream, ServerCallContext context)
         {
-            foreach (var fileChunk in _streamingReadRequestHandler.HandleRequest(request))
-                await responseStream.WriteAsync(fileChunk);
+            await _streamingReadRequestHandler.HandleRequest(request, responseStream);
         }
 
-        public override async Task<Ack> WriteFileStream(IAsyncStreamReader<WriteFileRequest> requestStream, ServerCallContext context) =>
+        public override async Task<FileMetadata> WriteFileStream(IAsyncStreamReader<WriteFileRequest> requestStream, ServerCallContext context) =>
             await _streamingWriteRequestHandler.HandleRequest(requestStream, context.CancellationToken);
     }
 }

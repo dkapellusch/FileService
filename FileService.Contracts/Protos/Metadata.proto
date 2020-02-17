@@ -1,0 +1,36 @@
+syntax = "proto3";
+option csharp_namespace = "FileService.Contracts";
+import "google/protobuf/timestamp.proto";
+
+// Models
+message FileMetadata {
+    string FileName = 1;
+    int64 SizeInBytes = 2;
+    google.protobuf.Timestamp CreatedTime = 3;
+    string Extension = 4;
+    string PathOnDisk = 5;
+    string ServerName = 6;
+}
+
+// Requests
+message MetadataRequest {
+    string FileName = 1;
+}
+
+message MetadataQuery {
+    string FileNameFragment = 1;
+}
+
+// Responses 
+message MetaDataQueryResult {
+    repeated FileMetadata Results = 1;
+}
+
+// Services
+service MetadataService {
+    rpc GetMetaData (MetadataRequest) returns (FileMetadata) {
+    }
+
+    rpc QueryMetadata (MetadataQuery) returns (MetaDataQueryResult) {
+    }
+}

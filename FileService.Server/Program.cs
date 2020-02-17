@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using FileService.RocksDb.Extensions;
-using FileService.Server.RequestHandlers;
+using FileService.Server.RequestHandlers.V2;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,7 +43,7 @@ namespace FileService.Server
         private static IServiceCollection AddRequestHandlers(this IServiceCollection services) => services
             .AddTransient<ReadRequestHandler>()
             .AddTransient<WriteRequestHandler>()
-            .AddTransient<StreamFileRequestHandler>()
+            .AddTransient<StreamingReadRequestHandler>()
             .AddTransient<StreamingWriteRequestHandler>();
 
         private static IServiceCollection AddServices(this IServiceCollection services) => services
