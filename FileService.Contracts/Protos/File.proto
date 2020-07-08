@@ -1,6 +1,6 @@
 syntax = "proto3";
 option csharp_namespace = "FileService.Contracts";
-package ConfluentPoc;
+package FileService;
 import "google/protobuf/timestamp.proto";
 // Models
 
